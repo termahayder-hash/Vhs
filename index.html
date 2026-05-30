@@ -2,7 +2,7 @@
 <html lang="ar">
 <head>
 <meta charset="UTF-8">
-<title>Memory Letter</title>
+<title>Memory Film</title>
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600&display=swap');
@@ -14,8 +14,8 @@ body {
     justify-content:center;
     align-items:center;
     font-family:'Cairo', sans-serif;
-    color:#f3e2c7;
     overflow:hidden;
+    color:#f3e2c7;
 }
 
 /* VHS scanlines */
@@ -31,10 +31,159 @@ body::before {
         transparent 3px,
         transparent 5px
     );
-    opacity:0.25;
     pointer-events:none;
-    z-index:10;
+    opacity:0.25;
 }
+
+/* BACKGROUNDS (SAFE + LOCAL, NO LINKS) */
+.bg {
+    position:fixed;
+    width:100%;
+    height:100%;
+    transition:1s ease;
+    z-index:-1;
+}
+
+/* cinematic gradients per page */
+.bg0 { background: radial-gradient(circle at center, #1a1a1a, black); }
+.bg1 { background: radial-gradient(circle at center, #2a1a1a, black); }
+.bg2 { background: radial-gradient(circle at center, #1a2230, black); }
+.bg3 { background: radial-gradient(circle at center, #2a2a1a, black); }
+.bg4 { background: radial-gradient(circle at center, #1a2a24, black); }
+.bg5 { background: radial-gradient(circle at center, #2a1a2a, black); }
+.bg6 { background: radial-gradient(circle at center, #111, black); }
+
+/* CARD */
+.card {
+    width:80%;
+    max-width:850px;
+    text-align:center;
+    font-size:22px;
+    line-height:2.3;
+    padding:35px;
+    background:rgba(20,20,20,0.55);
+    border:1px solid rgba(255,200,150,0.2);
+    backdrop-filter: blur(6px);
+    box-shadow:0 0 40px rgba(255,160,100,0.1);
+    opacity:0;
+    transition:0.6s ease;
+}
+
+.show { opacity:1; }
+
+button {
+    margin-top:20px;
+    padding:10px 18px;
+    background:transparent;
+    border:1px solid #f3e2c7;
+    color:#f3e2c7;
+    cursor:pointer;
+}
+
+/* final glow */
+.final {
+    text-shadow:0 0 15px rgba(255,180,120,0.3);
+}
+</style>
+</head>
+
+<body>
+
+<div class="bg bg0" id="bg"></div>
+
+<div class="card" id="card"></div>
+
+<script>
+
+const pages = [
+{
+text:`من حبيبك و صديقك و اخوك و زوجك`,
+bg:"bg0"
+},
+{
+text:`أكتب إليك وقصف المدفعية يتناثر حولنا
+ونحن مختبئون بكهوف الجبال
+
+أفكر فيكِ كثيرًا..
+أفكر فيك أكثر من الرصاص`,
+bg:"bg1"
+},
+{
+text:`لأني أُحبك خرجتُ إلى الشارع
+لأن سماء الغرفة لم تكن كافية لتحليقي`,
+bg:"bg2"
+},
+{
+text:`إن البهجة التي يخلقها وجودك تجعلني أتحمل أي شيء`,
+bg:"bg3"
+},
+{
+text:`إني أُغلق عيني لأنظر في تلك الأعماق
+فلا أجد نفسي إلا وقد أبحرت فيكِ`,
+bg:"bg4"
+},
+{
+text:`وأنتِ يا ايلاف
+
+لو أحبكِ مليون فأنا منهم
+وإذا أحبكِ واحد فهذا أنا
+وإذا لم يُحبك أحد فاعلمي حينها أني مت`,
+bg:"bg5"
+},
+{
+text:`أُحبكِ اليوم وغدًا وبعد غد
+أُحبكِ كامل الأيام
+أُحبكِ عندما نتخاصم وعند الأحضان
+
+إلى آخر نبضة في قلبي
+وإلى آخر نفس في صدري
+ستبقين الحكاية الأجمل ♡`,
+bg:"bg6"
+},
+{
+text:`إلى آخر نبضةٍ في قلبي،
+وإلى آخر نفسٍ في صدري،
+ستبقين أنتِ الحكاية الأجمل،
+والذكرى التي لا يطالها النسيان. ♡`,
+bg:"bg6"
+}
+];
+
+let i = 0;
+
+const card = document.getElementById("card");
+const bg = document.getElementById("bg");
+
+function render(){
+    card.classList.remove("show");
+
+    setTimeout(()=>{
+        card.innerHTML = `
+            <div style="white-space:pre-line">${pages[i].text}</div>
+            <button onclick="next()">▶ next</button>
+        `;
+
+        bg.className = "bg " + pages[i].bg;
+
+        card.classList.add("show");
+    },300);
+}
+
+function next(){
+    i++;
+    if(i >= pages.length){
+        card.innerHTML = `<div class="final">THE END ♡</div>`;
+        return;
+    }
+    render();
+}
+
+render();
+
+</script>
+
+</body>
+</html>}
 
 /* background layer */
 .bg {
