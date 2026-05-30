@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<title>VHS MEMORY</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600&display=swap');
+
+html, body {
+    margin:0;
+    padding:0;
+    font-family:'Cairo', sans-serif;
+    background:black;
+    color:#f3e2c7;
+    overflow-x:hidden;
+}
+
+/* VHS scanlines */
+body::before {
+    content:"";
+    position:fixed;
+    width:100%;
+    height:100%;
+    background: repeating-linear-gradient(
+        0deg,
+        rgba(255,255,255,0.04),
+        rgba(255,255,255,0.04) 1px,
+        transparent 2px,
+        transparent 4px
+    );
+    z-index:999;
+    pointer-events:none;
+    opacity:0.3;
+}
+
+/* noise flicker */
+.flicker {
+    animation: flick 0.12s infinite;
+}
+@keyframes flick {
+    0%{opacity:1;}
+    50%{opacity:0.92;}
+    100%{opacity:1;}
+}
+
+/* start screen */
+#start {
+    position:fixed;
+    width:100%;
+    height:100%;
+    background:black;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    z-index:1000;
+}
+
+button {
+    padding:15px 30px;
+    font-size:18px;
+    background:#111;
+    border:1px solid #f3e2c7;
+    color:#f3e2c7;
+    cursor:pointer;
+}
+
+/* room background */
+.room {
+    position:fixed;
+    width:100%;
+    height:100%;
+    background:url('https://i.imgur.com/8QfKQ9n.jpg');
+    background-size:cover;
+    filter:brightness(0.35);
+    z-index:-1;
+}
+
+/* canvas particles */
+canvas {
+    position:fixed;
+    top:0;
+    left:0;
+    z-index:0;
+}
+
+/* sections */
+section {
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    padding:60px;
+    position:relative;
+    z-index:2;
+    opacity:0;
+    transform:scale(0.97);
+    transition:2s ease;
+}
+
+section.active {
+    opacity:1;
+    transform:scale(1.05);
+}
+
+/* text */
+p {
+    font-size:22px;
+    line-height:2.4;
+    max-width:900px;
+}
+
+/* final freeze */
+.final {
+    background: radial-gradient(circle, #111, black);
+}
+
+/* glitch text */
+.glitch {
+    text-shadow:
+        2px 0 red,
+        -2px 0 cyan;
+}
+</style>
+</head>
+
+<body class="flicker">
+
+<div id="start">
+    <h1 class="glitch">VHS MEMORY INSERTED</h1>
+    <button onclick="start()">▶ Play Memory</button>
+</div>
+
+<div class="room"></div>
+<canvas id="c"></canvas>
+
+<audio id="music" loop>
+    <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<!-- OPENING -->
+<section><h1>من حبيبك و صديقك و اخوك و زوجك</h1></section>
+
+<section>
+<p>أكتب إليك وقصف المدفعية يتناثر حولنا<br>
+ونحن مختبئون بكهوف الجبال<br><br>
+
+أفكر فيكِ كثيرًا..<br>
+أفكر فيكِ أكثر من ما ينبغي لرجل يعيش بين الأشجار والرصاص</p>
+</section>
+
+<section>
+<p>لأني أُحبك فـ خرجتُ الى الشارع<br>
+لأن سَماء الغرفه لم تكن كافية لتحليقي</p>
+</section>
+
+<section>
+<p>إن البهجة التي يخلقها وجودك تجعلني أتحمل أي شيء</p>
+</section>
+
+<section>
+<p>إني أُغلق عيني لأنظر في تلك الاعماق<br>
+فلا أجد نفسي إلا وقد ابحرت فيكِ</p>
+</section>
+
+<section>
+<p>وأنتِ يا ايلاف<br>
+لو أحبكِ مليون فأنا منهم<br>
+وإذا أحبكِ واحدٌ فهذا أنا<br>
+وإذا لم يُحبكِ أحدٌ فاعلمي حينها أنِّي مُت</p>
+</section>
+
+<section class="final">
+<p>
+أُحبكِ اليوم وغدًا وبعد غد<br>
+أُحبكِ كامل الأيام<br>
+أُحبكِ حتى آخر نبضة<br><br>
+
+إلى آخر نبضةٍ في قلبي،<br>
+وإلى آخر نفسٍ في صدري،<br>
+ستبقين أنتِ الحكاية الأجمل،<br>
+والذكرى التي لا يطالها النسيان. ♡
+</p>
+</section>
+
+<script>
+
+/* start system */
+function start(){
+    document.getElementById("start").style.display="none";
+    document.getElementById("music").play().catch(()=>{});
+}
+
+/* scroll activation */
+const sections = document.querySelectorAll("section");
+
+const obs = new IntersectionObserver(e=>{
+    e.forEach(s=>{
+        if(s.isIntersecting) s.target.classList.add("active");
+    });
+},{threshold:0.6});
+
+sections.forEach(s=>obs.observe(s));
+
+/* particles */
+const c = document.getElementById("c");
+const ctx = c.getContext("2d");
+
+c.width = innerWidth;
+c.height = innerHeight;
+
+let p = [];
+
+for(let i=0;i<120;i++){
+    p.push({
+        x:Math.random()*c.width,
+        y:Math.random()*c.height,
+        r:Math.random()*1.6,
+        d:Math.random()*1.2
+    });
+}
+
+function draw(){
+    ctx.clearRect(0,0,c.width,c.height);
+    ctx.fillStyle="rgba(255,180,120,0.5)";
+
+    for(let i=0;i<p.length;i++){
+        let a=p[i];
+        ctx.beginPath();
+        ctx.arc(a.x,a.y,a.r,0,Math.PI*2);
+        ctx.fill();
+
+        a.y += a.d + 0.4;
+        a.x += Math.sin(a.y*0.01);
+
+        if(a.y>c.height){
+            a.y=0;
+            a.x=Math.random()*c.width;
+        }
+    }
+
+    requestAnimationFrame(draw);
+}
+draw();
+
+/* resize */
+window.addEventListener("resize",()=>{
+    c.width=innerWidth;
+    c.height=innerHeight;
+});
+
+</script>
+
+</body>
+  </html>
