@@ -1,164 +1,366 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Memory Letter</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Letter For You ❤️</title>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600&display=swap');
-
-body {
+*{
     margin:0;
-    height:100vh;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Georgia',serif;
+}
+
+body{
+    overflow:hidden;
+    background:#050505;
+    color:white;
+}
+
+.background{
+    position:fixed;
+    width:100%;
+    height:100%;
+    background:
+    radial-gradient(circle at center,#3b0a0a 0%,#100505 40%,#000 100%);
+}
+
+.particle{
+    position:absolute;
+    width:2px;
+    height:2px;
+    background:white;
+    border-radius:50%;
+    opacity:.5;
+    animation:float 12s linear infinite;
+}
+
+@keyframes float{
+    from{
+        transform:translateY(100vh);
+        opacity:0;
+    }
+    20%{opacity:.8;}
+    to{
+        transform:translateY(-100vh);
+        opacity:0;
+    }
+}
+
+/* PAGE 1 */
+
+#page1{
+    position:absolute;
+    width:100%;
+    height:100%;
     display:flex;
+    flex-direction:column;
     justify-content:center;
     align-items:center;
-    font-family:'Cairo', sans-serif;
-    color:#f3e2c7;
-    overflow:hidden;
+    transition:1.5s;
 }
 
-/* VHS scanlines */
-body::before {
-    content:"";
-    position:fixed;
-    width:100%;
-    height:100%;
-    background: repeating-linear-gradient(
-        0deg,
-        rgba(255,255,255,0.03),
-        rgba(255,255,255,0.03) 1px,
-        transparent 3px,
-        transparent 5px
-    );
-    opacity:0.25;
-    pointer-events:none;
-    z-index:10;
+.title{
+    font-size:2.5rem;
+    margin-bottom:40px;
+    letter-spacing:4px;
+    text-shadow:0 0 20px rgba(255,255,255,.5);
 }
 
-/* background layer */
-.bg {
-    position:fixed;
-    width:100%;
-    height:100%;
-    background-size:cover;
-    background-position:center;
-    filter:brightness(0.4) contrast(1.1) saturate(1.2);
-    transition:1s ease;
-    z-index:-1;
-}
-
-/* card */
-.card {
-    width:75%;
-    max-width:800px;
-    text-align:center;
-    font-size:22px;
-    line-height:2.2;
-    padding:40px;
-    background: rgba(20,20,20,0.55);
-    border:1px solid rgba(255,200,150,0.2);
-    backdrop-filter: blur(6px);
-    box-shadow:0 0 40px rgba(255,150,100,0.1);
-    transition:opacity 0.6s ease;
-}
-
-.hidden {
-    opacity:0;
-}
-
-/* button */
-button {
-    margin-top:20px;
-    padding:10px 18px;
-    background:transparent;
-    border:1px solid #f3e2c7;
-    color:#f3e2c7;
+.envelope{
+    width:320px;
+    height:220px;
+    position:relative;
     cursor:pointer;
+    transition:1s;
+}
+
+.envelope:hover{
+    transform:scale(1.05);
+}
+
+.base{
+    width:100%;
+    height:100%;
+    background:#d8c2a5;
+    position:absolute;
+    border-radius:5px;
+}
+
+.flap{
+    position:absolute;
+    width:100%;
+    height:100%;
+    background:#c8b08d;
+    clip-path:polygon(0 0,100% 0,50% 60%);
+    transform-origin:top;
+    transition:1.2s;
+}
+
+.open .flap{
+    transform:rotateX(180deg);
+}
+
+.button{
+    margin-top:40px;
+    padding:14px 40px;
+    border:none;
+    border-radius:50px;
+    background:white;
+    color:black;
+    font-size:1rem;
+    cursor:pointer;
+    transition:.4s;
+}
+
+.button:hover{
+    transform:scale(1.08);
+}
+
+/* PAGE 2 */
+
+#page2{
+    position:absolute;
+    width:100%;
+    height:100%;
+    display:none;
+    justify-content:center;
+    align-items:center;
+    padding:20px;
+}
+
+.letter{
+    width:90%;
+    max-width:800px;
+    background:#f8f1df;
+    color:#222;
+    padding:50px;
+    border-radius:12px;
+    box-shadow:
+    0 0 60px rgba(255,220,150,.35),
+    0 0 120px rgba(255,180,100,.2);
+    position:relative;
+    overflow-y:auto;
+    max-height:90vh;
+}
+
+.letter::before{
+    content:"";
+    position:absolute;
+    top:-20px;
+    left:50%;
+    transform:translateX(-50%);
+    width:160px;
+    height:40px;
+    background:rgba(255,220,120,.2);
+    filter:blur(20px);
+}
+
+h1{
+    text-align:center;
+    margin-bottom:30px;
+}
+
+#text{
+    line-height:2;
+    font-size:1.15rem;
+    white-space:pre-wrap;
+}
+
+#finalLine{
+    margin-top:40px;
+    text-align:center;
+    font-style:italic;
+    font-size:1.3rem;
+    opacity:0;
+    color:#8b0000;
+    transition:opacity 3s ease;
+}
+
+/* Candle glow */
+
+.glow{
+    position:absolute;
+    width:250px;
+    height:250px;
+    background:rgba(255,180,70,.18);
+    border-radius:50%;
+    filter:blur(70px);
+    animation:flicker 3s infinite;
+}
+
+.left{
+    left:-100px;
+    bottom:-100px;
+}
+
+.right{
+    right:-100px;
+    top:-100px;
+}
+
+@keyframes flicker{
+    0%,100%{opacity:.7;}
+    50%{opacity:1;}
+}
+
+/* Rose petals */
+
+.petal{
+    position:absolute;
+    font-size:20px;
+    animation:fall linear infinite;
+}
+
+@keyframes fall{
+    from{
+        transform:translateY(-100px) rotate(0deg);
+    }
+    to{
+        transform:translateY(120vh) rotate(360deg);
+    }
 }
 </style>
 </head>
 
 <body>
 
-<div class="bg" id="bg"></div>
+<div class="background"></div>
 
-<div class="card" id="card"></div>
+<!-- PAGE 1 -->
+
+<div id="page1">
+
+    <div class="title">
+        A LETTER FOR YOU ❤️
+    </div>
+
+    <div class="envelope" id="envelope">
+        <div class="base"></div>
+        <div class="flap"></div>
+    </div>
+
+    <button class="button" onclick="openLetter()">
+        Open Letter
+    </button>
+
+</div>
+
+<!-- PAGE 2 -->
+
+<div id="page2">
+
+    <div class="letter">
+
+        <div class="glow left"></div>
+        <div class="glow right"></div>
+
+        <h1>HABIBI ❤️</h1>
+
+        <div id="text"></div>
+
+        <div id="finalLine">
+            "And if I had to choose again,<br>
+            I'd still choose you." ❤️
+        </div>
+
+    </div>
+
+</div>
 
 <script>
 
-const pages = [
-{
-text:`من حبيبك و صديقك و اخوك و زوجك`,
-bg:`https://images.unsplash.com/photo-1501785888041-af3ef285b470`
-},
-{
-text:`أكتب إليك وقصف المدفعية يتناثر حولنا
-ونحن مختبئون بكهوف الجبال
+/* Particles */
 
-أفكر فيكِ كثيرًا..
-أفكر فيك أكثر من الرصاص`,
-bg:`https://images.unsplash.com/photo-1500530855697-b586d89ba3ee`
-},
-{
-text:`لأني أُحبك خرجتُ إلى الشارع
-لأن سماء الغرفة لم تكن كافية لتحليقي`,
-bg:`https://images.unsplash.com/photo-1496307653780-42ee777d4833`
-},
-{
-text:`إن البهجة التي يخلقها وجودك تجعلني أتحمل أي شيء`,
-bg:`https://images.unsplash.com/photo-1518837695005-2083093ee35b`
-},
-{
-text:`إني أُغلق عيني لأنظر في تلك الأعماق
-فلا أجد نفسي إلا وقد أبحرت فيكِ`,
-bg:`https://images.unsplash.com/photo-1507525428034-b723cf961d3e`
-},
-{
-text:`وأنتِ يا ايلاف
-
-لو أحبكِ مليون فأنا منهم
-وإذا أحبكِ واحد فهذا أنا
-وإذا لم يُحبك أحد فاعلمي حينها أني مت`,
-bg:`https://images.unsplash.com/photo-1500534314209-a25ddb2bd429`
-},
-{
-text:`أُحبكِ اليوم وغدًا وبعد غد
-أُحبكِ كامل الأيام
-أُحبكِ عندما نتخاصم وعند الأحضان
-
-إلى آخر نبضة في قلبي
-وإلى آخر نفس في صدري
-ستبقين الحكاية الأجمل ♡`,
-bg:`https://images.unsplash.com/photo-1500530855697-b586d89ba3ee`
-}
-];
-
-let i = 0;
-
-const card = document.getElementById("card");
-const bg = document.getElementById("bg");
-
-function show() {
-    card.innerHTML = `
-        <div style="white-space:pre-line">${pages[i].text}</div>
-        <button onclick="next()">▶ next</button>
-    `;
-
-    bg.style.backgroundImage = `url('${pages[i].bg}')`;
+for(let i=0;i<80;i++){
+    let p=document.createElement('div');
+    p.className='particle';
+    p.style.left=Math.random()*100+'vw';
+    p.style.animationDuration=(8+Math.random()*10)+'s';
+    p.style.animationDelay=Math.random()*10+'s';
+    document.body.appendChild(p);
 }
 
-function next() {
-    card.classList.add("hidden");
+/* Roses */
 
-    setTimeout(() => {
-        i = (i + 1) % pages.length;
-        show();
-        card.classList.remove("hidden");
-    }, 500);
+for(let i=0;i<25;i++){
+    let r=document.createElement('div');
+    r.className='petal';
+    r.innerHTML='🌹';
+    r.style.left=Math.random()*100+'vw';
+    r.style.animationDuration=(8+Math.random()*8)+'s';
+    r.style.animationDelay=Math.random()*10+'s';
+    document.body.appendChild(r);
 }
 
-show();
+/* Letter Text */
+
+const letterText = `HABIBI:
+
+i'm sorry for the moments when my worries spoke louder than my heart
+
+for the times I wasn't as gentle, as patient or as present as you deserved
+
+i know I overthink , I know I got lost in my own storms
+
+but please never doubt this ;
+
+you matter to me more than anything i've ever tried to put into words .
+
+thank you for staying ,for trying,for understanding me even when I make it hard ,m working in my self every day not to be perfect ,but to be someone who loves you the way you always deserved.
+
+because having you in my life isn't just special it's the part of my world I never want to take for granted .
+
+nhbek bercha habib rouhi ❤️`;
+
+function openLetter(){
+
+    document.getElementById('envelope').classList.add('open');
+
+    setTimeout(()=>{
+
+        document.getElementById('page1').style.opacity='0';
+
+        setTimeout(()=>{
+
+            document.getElementById('page1').style.display='none';
+            document.getElementById('page2').style.display='flex';
+
+            typeWriter();
+
+        },1000);
+
+    },1200);
+}
+
+function typeWriter(){
+
+    let i=0;
+    const speed=35;
+    const target=document.getElementById("text");
+
+    function type(){
+
+        if(i < letterText.length){
+
+            target.innerHTML += letterText.charAt(i);
+            i++;
+
+            setTimeout(type,speed);
+
+        }else{
+
+            setTimeout(()=>{
+                document.getElementById("finalLine").style.opacity="1";
+            },3000);
+
+        }
+    }
+
+    type();
+}
 
 </script>
 
