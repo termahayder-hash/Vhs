@@ -1,138 +1,161 @@
-    
-            <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Red Romantic Love Letter</title>
+<title>made with love ❤️</title>
+
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{
-  background:#0a0003;
-  overflow:hidden;
-  color:white;
-  font-family:Georgia,serif;
-}
-.page{
-  position:absolute; inset:0;
-  display:flex; flex-direction:column;
-  justify-content:center; align-items:center;
-  text-align:center;
-  padding:40px;
-  opacity:0; transform:scale(.95);
-  transition:1s ease;
-  pointer-events:none;
-}
-.page.active{
-  opacity:1; transform:scale(1);
-  pointer-events:auto;
-}
-.bg{
-  position:fixed; inset:0;
-  background:
-  radial-gradient(circle at 20% 20%, rgba(255,0,80,.25), transparent 30%),
-  radial-gradient(circle at 80% 30%, rgba(255,120,120,.18), transparent 30%),
-  radial-gradient(circle at 50% 80%, rgba(255,0,120,.18), transparent 30%);
-}
-.card{
-  background:rgba(255,255,255,.05);
-  backdrop-filter:blur(12px);
-  border:1px solid rgba(255,255,255,.12);
-  border-radius:30px;
-  padding:35px;
-  max-width:950px;
-  box-shadow:0 0 50px rgba(255,0,90,.25);
-}
-h1{
-  font-size:clamp(2rem,7vw,5rem);
-  line-height:1.4;
-  text-shadow:0 0 20px rgba(255,100,150,.8);
-}
-p{
-  font-size:clamp(1rem,3vw,1.6rem);
-  line-height:1.8;
-}
-.heart{
-  font-size:120px;
-  animation:pulse 2s infinite;
-  filter:drop-shadow(0 0 30px #ff3366);
-}
-@keyframes pulse{
-  50%{transform:scale(1.12)}
-}
-.rose{
-  position:absolute;
-  font-size:38px;
-  animation:float 10s linear infinite;
-}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Georgia',serif;}
+body{overflow:hidden;background:#050505;color:white;}
+.background{position:fixed;width:100%;height:100%;background:radial-gradient(circle at center,#3b0a0a 0%,#100505 40%,#000 100%);}
+
+.particle{position:absolute;width:2px;height:2px;background:white;border-radius:50%;opacity:.5;animation:float 12s linear infinite;}
 @keyframes float{
-  from{transform:translateY(110vh) rotate(0deg)}
-  to{transform:translateY(-120vh) rotate(360deg)}
+from{transform:translateY(100vh);opacity:0;}
+20%{opacity:.8;}
+to{transform:translateY(-100vh);opacity:0;}
 }
-button{
-  margin-top:25px;
-  padding:14px 28px;
-  border:none;
-  border-radius:999px;
-  background:linear-gradient(45deg,#ff2d6f,#ff8fb1);
-  color:white;
-  font-weight:bold;
-  cursor:pointer;
+
+#page1{position:absolute;width:100%;height:100%;display:flex;flex-direction:column;justify-content:center;align-items:center;transition:1.5s;}
+.title{font-size:2.5rem;margin-bottom:40px;letter-spacing:4px;text-shadow:0 0 20px rgba(255,255,255,.5);}
+.envelope{width:320px;height:220px;position:relative;cursor:pointer;transition:1s;}
+.envelope:hover{transform:scale(1.05);}
+.base{width:100%;height:100%;background:#d8c2a5;position:absolute;border-radius:5px;}
+.flap{position:absolute;width:100%;height:100%;background:#c8b08d;clip-path:polygon(0 0,100% 0,50% 60%);transform-origin:top;transition:1.2s;}
+.open .flap{transform:rotateX(180deg);}
+
+.button{margin-top:40px;padding:14px 40px;border:none;border-radius:50px;background:white;color:black;font-size:1rem;cursor:pointer;transition:.4s;}
+.button:hover{transform:scale(1.08);}
+
+#page2{position:absolute;width:100%;height:100%;display:none;justify-content:center;align-items:center;padding:20px;}
+.letter{width:90%;max-width:800px;background:#f8f1df;color:#222;padding:50px;border-radius:12px;box-shadow:0 0 60px rgba(255,220,150,.35),0 0 120px rgba(255,180,100,.2);position:relative;overflow-y:auto;max-height:90vh;}
+h1{text-align:center;margin-bottom:30px;}
+#text{line-height:2;font-size:1.15rem;white-space:pre-wrap;}
+#finalLine{margin-top:40px;text-align:center;font-style:italic;font-size:1.3rem;opacity:0;color:#8b0000;transition:opacity 3s ease;}
+
+.glow{position:absolute;width:250px;height:250px;background:rgba(255,180,70,.18);border-radius:50%;filter:blur(70px);animation:flicker 3s infinite;}
+.left{left:-100px;bottom:-100px;}
+.right{right:-100px;top:-100px;}
+@keyframes flicker{0%,100%{opacity:.7;}50%{opacity:1;}}
+
+.petal{position:absolute;font-size:20px;animation:fall linear infinite;}
+@keyframes fall{
+from{transform:translateY(-100px) rotate(0deg);}
+to{transform:translateY(120vh) rotate(360deg);}
 }
-.nav{
-  position:absolute;
-  bottom:30px;
-  display:flex;
-  gap:10px;
+
+.heart-frame{
+width:220px;height:220px;margin:0 auto 30px;position:relative;
+transform:rotate(-45deg);overflow:hidden;
+box-shadow:0 0 20px rgba(255,80,80,.6),0 0 50px rgba(255,80,80,.4),0 0 90px rgba(255,80,80,.2);
+}
+.heart-frame,.heart-frame::before,.heart-frame::after{background:#fff;}
+.heart-frame::before,.heart-frame::after{
+content:'';position:absolute;width:220px;height:220px;border-radius:50%;
+}
+.heart-frame::before{top:-110px;left:0;}
+.heart-frame::after{left:110px;top:0;}
+.heart-frame img{
+position:absolute;width:320px;height:320px;object-fit:cover;
+top:-50px;left:-50px;transform:rotate(45deg);z-index:2;
 }
 </style>
 </head>
 <body>
 
-<div class="bg"></div>
+<div class="background"></div>
 
-<div class="rose" style="left:8%">🌹</div>
-<div class="rose" style="left:22%;animation-delay:-2s">🌹</div>
-<div class="rose" style="left:50%;animation-delay:-5s">🌹</div>
-<div class="rose" style="left:75%;animation-delay:-1s">🌹</div>
-<div class="rose" style="left:92%;animation-delay:-3s">🌹</div>
-
-<div class="page active" id="p0">
-  <div class="heart">❤️</div>
-  <div class="card">
-    <h1>PRESS OPEN</h1>
-    <p>A universe made of love</p>
-    <button onclick="nextPage()">OPEN ✨</button>
-  </div>
+<div id="page1">
+<div class="title">A LETTER FOR YOU ❤️</div>
+<div class="envelope" id="envelope"><div class="base"></div><div class="flap"></div></div>
+<button class="button" onclick="openLetter()">Open Letter</button>
 </div>
 
-<div class="page" id="p1"><div class="card"><h1>If I say I love your eyes,<br>then what about your smile?</h1></div><div class="nav"><button onclick="nextPage()">Next</button></div></div>
-<div class="page" id="p2"><div class="card"><h1>If I say I love your smile,<br>then what about your laughter?</h1></div><div class="nav"><button onclick="prevPage()">Back</button><button onclick="nextPage()">Next</button></div></div>
-<div class="page" id="p3"><div class="card"><h1>If I say I love your laughter,<br>then what about your heart?</h1></div><div class="nav"><button onclick="prevPage()">Back</button><button onclick="nextPage()">Next</button></div></div>
-<div class="page" id="p4"><div class="card"><h1>If I say I love your heart,<br>then what about your soul?</h1></div><div class="nav"><button onclick="prevPage()">Back</button><button onclick="nextPage()">Next</button></div></div>
-<div class="page" id="p5"><div class="card"><h1>So no...<br><br>I can never have a favorite thing about you.</h1></div><div class="nav"><button onclick="prevPage()">Back</button><button onclick="nextPage()">Next</button></div></div>
+<div id="page2">
+<div class="letter">
+<div class="glow left"></div>
+<div class="glow right"></div>
 
-<div class="page" id="p6">
-<div class="card">
-<p>
-Because every part of you is my favorite—<br>
-today, tomorrow, and after 10,000 years.<br><br>
-And if I had the choice to choose you,<br>
-I would choose you every time.<br><br>
-❤️ Nhbek barcha, habibi. ❤️
-</p>
+<h1>HABIBI ❤️</h1>
+
+<div class="heart-frame">
+<img src="FB_IMG_1781013759293.jpg" alt="Our Photo">
 </div>
-<div class="nav"><button onclick="prevPage()">Back</button></div>
+
+<div id="text"></div>
+
+<div id="finalLine">
+"And if I had to choose again,<br>I'd still choose you." ❤️
+</div>
+
+</div>
 </div>
 
 <script>
-let c=0;
-function show(){
- document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
- document.getElementById('p'+c).classList.add('active');
+for(let i=0;i<80;i++){
+let p=document.createElement('div');
+p.className='particle';
+p.style.left=Math.random()*100+'vw';
+p.style.animationDuration=(8+Math.random()*10)+'s';
+document.body.appendChild(p);
 }
-function nextPage(){if(c<6){c++;show();}}
-function prevPage(){if(c>0){c--;show();}}
+
+for(let i=0;i<25;i++){
+let r=document.createElement('div');
+r.className='petal';
+r.innerHTML='🌹';
+r.style.left=Math.random()*100+'vw';
+r.style.animationDuration=(8+Math.random()*8)+'s';
+document.body.appendChild(r);
+}
+
+const letterText=`HABIBI:
+
+i'm sorry for the moments when my worries spoke louder than my heart
+
+for the times I wasn't as gentle, as patient or as present as you deserved
+
+i know I overthink , I know I got lost in my own storms
+
+but please never doubt this ;
+
+you matter to me more than anything i've ever tried to put into words .
+
+thank you for staying ,for trying,for understanding me even when I make it hard ,m working in my self every day not to be perfect ,but to be someone who loves you the way you always deserved.
+
+because having you in my life isn't just special it's the part of my world I never want to take for granted .
+
+nhbek bercha habib rouhi ❤️`;
+
+function openLetter(){
+document.getElementById('envelope').classList.add('open');
+setTimeout(()=>{
+document.getElementById('page1').style.opacity='0';
+setTimeout(()=>{
+document.getElementById('page1').style.display='none';
+document.getElementById('page2').style.display='flex';
+typeWriter();
+},1000);
+},1200);
+}
+
+function typeWriter(){
+let i=0;
+const target=document.getElementById("text");
+function type(){
+if(i<letterText.length){
+target.innerHTML+=letterText.charAt(i);
+i++;
+setTimeout(type,35);
+}else{
+setTimeout(()=>{
+document.getElementById("finalLine").style.opacity="1";
+},3000);
+}
+}
+type();
+}
 </script>
 
 </body>
