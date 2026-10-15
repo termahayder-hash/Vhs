@@ -1,4 +1,5 @@
-k<!DOCTYPE html>
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -6,111 +7,352 @@ k<!DOCTYPE html>
 <title>made with love ❤️</title>
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Georgia',serif;}
-body{overflow:hidden;background:#050505;color:white;}
-.background{position:fixed;width:100%;height:100%;background:radial-gradient(circle at center,#3b0a0a 0%,#100505 40%,#000 100%);}
-
-.particle{position:absolute;width:2px;height:2px;background:white;border-radius:50%;opacity:.5;animation:float 12s linear infinite;}
-@keyframes float{
-from{transform:translateY(100vh);opacity:0;}
-20%{opacity:.8;}
-to{transform:translateY(-100vh);opacity:0;}
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Georgia', serif;
 }
 
-#page1{position:absolute;width:100%;height:100%;display:flex;flex-direction:column;justify-content:center;align-items:center;transition:1.5s;}
-.title{font-size:2.5rem;margin-bottom:40px;letter-spacing:4px;text-shadow:0 0 20px rgba(255,255,255,.5);}
-.envelope{width:320px;height:220px;position:relative;cursor:pointer;transition:1s;}
-.envelope:hover{transform:scale(1.05);}
-.base{width:100%;height:100%;background:#d8c2a5;position:absolute;border-radius:5px;}
-.flap{position:absolute;width:100%;height:100%;background:#c8b08d;clip-path:polygon(0 0,100% 0,50% 60%);transform-origin:top;transition:1.2s;}
-.open .flap{transform:rotateX(180deg);}
-
-.button{margin-top:40px;padding:14px 40px;border:none;border-radius:50px;background:white;color:black;font-size:1rem;cursor:pointer;transition:.4s;}
-.button:hover{transform:scale(1.08);}
-
-#page2{position:absolute;width:100%;height:100%;display:none;justify-content:center;align-items:center;padding:20px;}
-.letter{width:90%;max-width:800px;background:#f8f1df;color:#222;padding:50px;border-radius:12px;box-shadow:0 0 60px rgba(255,220,150,.35),0 0 120px rgba(255,180,100,.2);position:relative;overflow-y:auto;max-height:90vh;}
-h1{text-align:center;margin-bottom:30px;}
-#text{line-height:2;font-size:1.15rem;white-space:pre-wrap;}
-#finalLine{margin-top:40px;text-align:center;font-style:italic;font-size:1.3rem;opacity:0;color:#8b0000;transition:opacity 3s ease;}
-
-.glow{position:absolute;width:250px;height:250px;background:rgba(255,180,70,.18);border-radius:50%;filter:blur(70px);animation:flicker 3s infinite;}
-.left{left:-100px;bottom:-100px;}
-.right{right:-100px;top:-100px;}
-@keyframes flicker{0%,100%{opacity:.7;}50%{opacity:1;}}
-
-.petal{position:absolute;font-size:20px;animation:fall linear infinite;}
-@keyframes fall{
-from{transform:translateY(-100px) rotate(0deg);}
-to{transform:translateY(120vh) rotate(360deg);}
+body {
+    overflow: hidden;
+    background: #050505;
+    color: white;
 }
 
-.heart-frame{
-width:220px;height:220px;margin:0 auto 30px;position: absolute ;
-transform:rotate(-45deg);overflow:hidden;
-box-shadow:0 0 20px rgba(255,80,80,.6),0 0 50px rgba(255,80,80,.4),0 0 90px rgba(255,80,80,.2);
+.background {
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(
+        circle at center,
+        #3b0a0a 0%,
+        #100505 40%,
+        #000 100%
+    );
 }
-.heart-frame,.heart-frame::before,.heart-frame::after{background:#fff;}
-.heart-frame::before,.heart-frame::after{
-content:'';position:absolute;width:320px;height:320px;border-radius:50%;
+
+.particle {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: white;
+    border-radius: 50%;
+    opacity: .5;
+    animation: float 12s linear infinite;
+    pointer-events: none;
 }
-.heart-frame::before{top:-110px;left:0;}
-.heart-frame::after{left:110px;top:0;}
-.heart-frame img{
-position:absolute;width:220px;height:220px;object-fit:cover;
-top:-50px;left:-50px;transform:rotate(45deg);z-index:2;
+
+@keyframes float {
+    from {
+        transform: translateY(100vh);
+        opacity: 0;
+    }
+    20% { opacity: .8; }
+    to {
+        transform: translateY(-100vh);
+        opacity: 0;
+    }
+}
+
+#page1 {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 1.5s;
+}
+
+.title {
+    font-size: clamp(1.4rem, 6vw, 2.5rem);
+    margin-bottom: 40px;
+    letter-spacing: 4px;
+    text-align: center;
+    text-shadow: 0 0 20px rgba(255,255,255,.5);
+}
+
+.envelope {
+    width: min(320px, 85vw);
+    height: 220px;
+    position: relative;
+    cursor: pointer;
+    transition: 1s;
+}
+
+.envelope:hover {
+    transform: scale(1.05);
+}
+
+.base {
+    width: 100%;
+    height: 100%;
+    background: #d8c2a5;
+    position: absolute;
+    border-radius: 5px;
+}
+
+.flap {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: #c8b08d;
+    clip-path: polygon(0 0, 100% 0, 50% 60%);
+    transform-origin: top;
+    transition: 1.2s;
+}
+
+.open .flap {
+    transform: rotateX(180deg);
+}
+
+.button {
+    margin-top: 40px;
+    padding: 14px 40px;
+    border: none;
+    border-radius: 50px;
+    background: white;
+    color: black;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: .4s;
+}
+
+.button:hover {
+    transform: scale(1.08);
+}
+
+#page2 {
+    position: absolute;
+    inset: 0;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    overflow: hidden;
+}
+
+.letter {
+    width: 90%;
+    max-width: 800px;
+    background: #f8f1df;
+    color: #222;
+    padding: 50px;
+    border-radius: 12px;
+    box-shadow:
+        0 0 60px rgba(255,220,150,.35),
+        0 0 120px rgba(255,180,100,.2);
+    position: relative;
+    overflow-x: hidden;
+    overflow-y: auto;
+    max-height: 90vh;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+    scrollbar-color: #c5b79d transparent;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 30px;
+    position: relative;
+    z-index: 2;
+}
+
+/* PHOTO: NORMAL RECTANGULAR FRAME */
+.photo-frame {
+    display: block;
+    position: relative;
+    width: 100%;
+    max-width: 420px;
+    margin: 0 auto 30px;
+    border-radius: 8px;
+    overflow: hidden;
+    line-height: 0;
+    box-shadow:
+        0 0 20px rgba(255,80,80,.35),
+        0 0 45px rgba(255,80,80,.15);
+    z-index: 1;
+}
+
+/* Keep the entire photo visible without rotating or cropping it */
+.photo-frame img {
+    display: block;
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    transform: none;
+    position: relative;
+}
+
+#text {
+    position: relative;
+    z-index: 2;
+    line-height: 2;
+    font-size: 1.15rem;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+
+#finalLine {
+    position: relative;
+    z-index: 2;
+    margin-top: 40px;
+    text-align: center;
+    font-style: italic;
+    font-size: 1.3rem;
+    opacity: 0;
+    color: #8b0000;
+    transition: opacity 3s ease;
+}
+
+.glow {
+    position: absolute;
+    width: 250px;
+    height: 250px;
+    background: rgba(255,180,70,.18);
+    border-radius: 50%;
+    filter: blur(70px);
+    animation: flicker 3s infinite;
+    pointer-events: none;
+}
+
+.left {
+    left: -100px;
+    bottom: -100px;
+}
+
+.right {
+    right: -100px;
+    top: -100px;
+}
+
+@keyframes flicker {
+    0%, 100% { opacity: .7; }
+    50% { opacity: 1; }
+}
+
+.petal {
+    position: absolute;
+    font-size: 20px;
+    animation: fall linear infinite;
+    pointer-events: none;
+}
+
+@keyframes fall {
+    from {
+        transform: translateY(-100px) rotate(0deg);
+    }
+    to {
+        transform: translateY(120vh) rotate(360deg);
+    }
+}
+
+/* PHONE LAYOUT */
+@media (max-width: 600px) {
+    #page2 {
+        padding: 12px;
+    }
+
+    .letter {
+        width: 100%;
+        max-height: 92vh;
+        padding: 28px 20px;
+        border-radius: 18px;
+    }
+
+    h1 {
+        font-size: 2rem;
+        margin-bottom: 24px;
+    }
+
+    .photo-frame {
+        max-width: 100%;
+        margin-bottom: 24px;
+        border-radius: 7px;
+    }
+
+    #text {
+        font-size: 1rem;
+        line-height: 1.9;
+    }
+
+    #finalLine {
+        font-size: 1.15rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .particle,
+    .petal,
+    .glow {
+        animation-duration: 30s;
+    }
 }
 </style>
 </head>
+
 <body>
 
 <div class="background"></div>
 
 <div id="page1">
-<div class="title">A LETTER FOR YOU ❤️</div>
-<div class="envelope" id="envelope"><div class="base"></div><div class="flap"></div></div>
-<button class="button" onclick="openLetter()">Open Letter</button>
+    <div class="title">A LETTER FOR YOU ❤️</div>
+
+    <div class="envelope" id="envelope">
+        <div class="base"></div>
+        <div class="flap"></div>
+    </div>
+
+    <button class="button" onclick="openLetter()">
+        Open Letter
+    </button>
 </div>
 
 <div id="page2">
-<div class="letter">
-<div class="glow left"></div>
-<div class="glow right"></div>
+    <div class="letter">
 
-<h1>HABIBI ❤️</h1>
+        <div class="glow left"></div>
+        <div class="glow right"></div>
 
-<div class="heart-frame">
-<img src="IMG_20261003_223200_029.jpg" alt="Our Photo">
-</div>
+        <h1>HABIBI ❤️</h1>
 
-<div id="text"></div>
+        <!-- Normal rectangular photo: no diamond or heart shape -->
+        <div class="photo-frame">
+            <img
+                src="IMG_20261003_223200_029.jpg"
+                alt="Our Photo"
+            >
+        </div>
 
-<div id="finalLine">
-"And if I had to choose again,<br>I'd still choose you." ❤️
-</div>
+        <div id="text"></div>
 
-</div>
+        <div id="finalLine">
+            "And if I had to choose again,<br>
+            I'd still choose you." ❤️
+        </div>
+
+    </div>
 </div>
 
 <script>
-for(let i=0;i<80;i++){
-let p=document.createElement('div');
-p.className='particle';
-p.style.left=Math.random()*100+'vw';
-p.style.animationDuration=(8+Math.random()*10)+'s';
-document.body.appendChild(p);
+for (let i = 0; i < 80; i++) {
+    let p = document.createElement('div');
+    p.className = 'particle';
+    p.style.left = Math.random() * 100 + 'vw';
+    p.style.animationDuration = (8 + Math.random() * 10) + 's';
+    document.body.appendChild(p);
 }
 
-for(let i=0;i<25;i++){
-let r=document.createElement('div');
-r.className='petal';
-r.innerHTML='🌹';
-r.style.left=Math.random()*100+'vw';
-r.style.animationDuration=(8+Math.random()*8)+'s';
-document.body.appendChild(r);
+for (let i = 0; i < 25; i++) {
+    let r = document.createElement('div');
+    r.className = 'petal';
+    r.innerHTML = '🌹';
+    r.style.left = Math.random() * 100 + 'vw';
+    r.style.animationDuration = (8 + Math.random() * 8) + 's';
+    document.body.appendChild(r);
 }
 
-const letterText=`HABIBI:
+const letterText = `HABIBI:
 
 i'm sorry for the moments when my worries spoke louder than my heart
 
@@ -128,33 +370,45 @@ because having you in my life isn't just special it's the part of my world I nev
 
 nhbek bercha habib rouhi ❤️`;
 
-function openLetter(){
-document.getElementById('envelope').classList.add('open');
-setTimeout(()=>{
-document.getElementById('page1').style.opacity='0';
-setTimeout(()=>{
-document.getElementById('page1').style.display='none';
-document.getElementById('page2').style.display='flex';
-typeWriter();
-},1000);
-},1200);
+function openLetter() {
+    document.getElementById('envelope').classList.add('open');
+
+    setTimeout(() => {
+        document.getElementById('page1').style.opacity = '0';
+
+        setTimeout(() => {
+            document.getElementById('page1').style.display = 'none';
+            document.getElementById('page2').style.display = 'flex';
+            typeWriter();
+        }, 1000);
+
+    }, 1200);
 }
 
-function typeWriter(){
-let i=0;
-const target=document.getElementById("text");
-function type(){
-if(i<letterText.length){
-target.innerHTML+=letterText.charAt(i);
-i++;
-setTimeout(type,35);
-}else{
-setTimeout(()=>{
-document.getElementById("finalLine").style.opacity="1";
-},3000);
-}
-}
-type();
+function typeWriter() {
+    let i = 0;
+    const target = document.getElementById('text');
+
+    target.textContent = '';
+
+    function type() {
+        if (i < letterText.length) {
+            target.textContent += letterText.charAt(i);
+            i++;
+
+            // Keep the current text visible while typing
+            const letter = document.querySelector('.letter');
+            letter.scrollTop = letter.scrollHeight;
+
+            setTimeout(type, 35);
+        } else {
+            setTimeout(() => {
+                document.getElementById('finalLine').style.opacity = '1';
+            }, 3000);
+        }
+    }
+
+    type();
 }
 </script>
 
